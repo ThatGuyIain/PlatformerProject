@@ -6,7 +6,7 @@ class Platformer extends Phaser.Scene{
     init(){
         this.ACCELERATION = 500;
         this.DRAG = 2000;
-        this.JUMP_VELOCITY = -520;
+        this.JUMP_VELOCITY = -410;
         this.physics.world.gravity.y = 1500;
         this.PARTICLE_VELOCITY = 0;
         this.SCALE = 2;
@@ -73,7 +73,35 @@ class Platformer extends Phaser.Scene{
             alpha: {start: 1, end: 0.1}
         })
 
-         my.vfx.walking.stop();
+        my.vfx.walking.stop();
+
+        my.vfx.jumping = this.add.particles(0,0,"kenny-particles",{
+            frame: ["slash_01.png","slash_02.png"],
+            random: true,
+            scale: {start:0.1,end:.2},
+            lifespan: 150,
+            gravityY: 400,
+            maxAliveParticles: 1,
+            duration: 150,
+            alpha:{start: 1, end:.1}
+        })
+        
+        my.vfx.jumping.stop();
+
+        //Setting up coin objects
+
+        this.coins = this.map.createFromObjects("Coins",{
+            name: "coin",
+            key: "transparent",
+            frame: 2
+        });
+
+        this.physics.world.enable(this.coins, Phaser.Physics.Arcade.STATIC_BODY);
+        this.coinGroup = this.add.group(this.coins);
+
+        this.physics.add.overlap(my.sprite.player, this.coinGroup,(obj1,obj2)=>{
+            obj2.destroy();
+        })
 
     }
 
@@ -126,12 +154,16 @@ class Platformer extends Phaser.Scene{
         //Handle jumping
         if(my.sprite.player.body.blocked.down && Phaser.Input.Keyboard.JustDown(cursors.up)) {
             my.sprite.player.body.setVelocityY(this.JUMP_VELOCITY);
+            //VFX for jump particle
+            my.vfx.jumping.startFollow(my.sprite.player, my.sprite.player.displayWidth/2, my.sprite.player.displayHeight/2-5,false);
+            my.vfx.jumping.start();
         }
 
         //Handle double jump
         if(!my.sprite.player.body.blocked.down && this.canDouble && Phaser.Input.Keyboard.JustDown(cursors.up)){
             my.sprite.player.body.setVelocityY(this.JUMP_VELOCITY);
-            console.log("double")
+            my.vfx.jumping.startFollow(my.sprite.player, my.sprite.player.displayWidth/2, my.sprite.player.displayHeight/2-5,false);
+            my.vfx.jumping.start();
             this.canDouble = false;
         }
 
