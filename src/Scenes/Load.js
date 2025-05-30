@@ -25,6 +25,10 @@ class Load extends Phaser.Scene {
             frameHeight: 16
         });
 
+        // Load SFX
+        this.load.audio('sfxjump','Jump.wav');
+        this.load.audio('sfxcoin','Pickup_coin.wav');
+
         // Oooh, fancy. A multi atlas is a texture atlas which has the textures spread
         // across multiple png files, so as to keep their size small for use with
         // lower resource devices (like mobile phones).
@@ -32,6 +36,9 @@ class Load extends Phaser.Scene {
         // The multiatlas was created using TexturePacker and the Kenny
         // Particle Pack asset pack.
         this.load.multiatlas("kenny-particles", "kenny-particles.json");
+
+        //Set description for the game
+        document.getElementById('description').innerHTML = '<h2>Controls</h2><br>Up Arrow: Jump// Left Arrow: Left // Right Arrow: Right // Up Arrow Twice: Double Jump';
     }
 
     create() {

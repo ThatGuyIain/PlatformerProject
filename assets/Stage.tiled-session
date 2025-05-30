@@ -3,12 +3,30 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "stage.tmj",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
+        "": {
+            "scaleInEditor": 1
+        },
         "#monochrome": {
             "scaleInEditor": 1
+        },
+        "stage.tmj": {
+            "scale": 1,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 783,
+                "y": 383
+            }
+        },
+        "stage.tmj#monochrome": {
+            "scaleInDock": 1
+        },
+        "stage.tmj#monochrome_tilemap_packed": {
+            "scaleInDock": 1
         }
     },
     "last.imagePath": "/Users/iainklotzbach/CMPM 120/PlatformerProject/assets",
@@ -18,10 +36,12 @@
     "map.tileWidth": 16,
     "map.width": 60,
     "openFiles": [
+        "stage.tmj"
     ],
     "project": "Stage.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "stage.tmj"
     ],
     "tileset.embedInMap": true,
     "tileset.tileSize": {

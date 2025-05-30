@@ -44,6 +44,17 @@ class Platformer extends Phaser.Scene{
             collides: false
         });
 
+        //Set up end point 
+
+        this.endpoint = this.map.createFromObjects("objects",{
+            name: "endpoint",
+            key: "transparent",
+            frame: 22
+        })
+
+        this.physics.world.enable(this.endpoint, Phaser.Physics.Arcade.STATIC_BODY);
+        this.end = this.add.group(this.endpoint);
+
         //Set Player character
         my.sprite.player = this.physics.add.sprite(50,500,"platformer_characters","tile_0000.png");
         my.sprite.player.setCollideWorldBounds(true);
@@ -101,7 +112,15 @@ class Platformer extends Phaser.Scene{
 
         this.physics.add.overlap(my.sprite.player, this.coinGroup,(obj1,obj2)=>{
             obj2.destroy();
+            this.sound.play('sfxcoin',{
+                volume: 0.5
+            });
         })
+
+        //add endpoint collision
+        this.physics.add.overlap(my.sprite.player, this.endpoint,(obj1,obj2)=>{
+            this.scene.start("endgame");
+        });
 
     }
 
@@ -157,6 +176,9 @@ class Platformer extends Phaser.Scene{
             //VFX for jump particle
             my.vfx.jumping.startFollow(my.sprite.player, my.sprite.player.displayWidth/2, my.sprite.player.displayHeight/2-5,false);
             my.vfx.jumping.start();
+            this.sound.play('sfxjump',{
+                volume:0.5
+            });
         }
 
         //Handle double jump
@@ -165,6 +187,9 @@ class Platformer extends Phaser.Scene{
             my.vfx.jumping.startFollow(my.sprite.player, my.sprite.player.displayWidth/2, my.sprite.player.displayHeight/2-5,false);
             my.vfx.jumping.start();
             this.canDouble = false;
+            this.sound.play('sfxjump',{
+                volume:0.5
+            });
         }
 
         //Reset double jump condition
